@@ -8,7 +8,7 @@ const getLocationPromise = () => {
   });
 };
 
-export const getPosition = async () => {
+const getCoordinates = async () => {
   try {
     const res = await getLocationPromise();
     const coordinates = {
@@ -19,5 +19,19 @@ export const getPosition = async () => {
     return coordinates;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getCountryCode = async function () {
+  try {
+    const { latitude, longitude } = await getCoordinates();
+    const response = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+    );
+    const data = await response.json();
+    const countryCode = data.countryCode;
+    return countryCode;
+  } catch (err) {
+    console.error(err);
   }
 };
