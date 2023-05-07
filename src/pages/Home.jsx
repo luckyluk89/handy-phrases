@@ -17,6 +17,7 @@ const Home = () => {
       }
     })();
   }, []);
+
   if (isLoading) return <h3>Wczytywanie</h3>;
 
   if (!isLoading) return <h3>Twoja lokalizacja: {country}</h3>;
