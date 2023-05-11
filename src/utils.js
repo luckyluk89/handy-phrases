@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const getLocationPromise = () => {
   return new Promise(function (resolve, reject) {
     // Promisifying the geolocation API
@@ -34,4 +36,40 @@ export const getCountryCode = async function () {
   } catch (err) {
     console.error(err);
   }
+};
+
+export const getCountry = async function (countryCode) {
+  try {
+    // const countryCode = await getCountryCode();
+    const response = await fetch(
+      `https://restcountries.com/v3.1/alpha/${countryCode}`
+    );
+    const data = await response.json();
+    const country = data[0];
+    return country;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getCountry2 = async (countryCode) => {
+  try {
+    // const countryCode = await getCountryCode();
+    const response = await fetch(
+      `https://restcountries.com/v3.1/alpha/${countryCode}`
+    );
+    const data = await response.json();
+    const country = data[0];
+    return country;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const translate = async (text, targetLng) => {
+  let res = await axios.post(
+    `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQOlPEccv-XnbOLIm1ZczANzqSOBWkxuk`,
+    { q: text, target: targetLng }
+  );
+  console.log(res);
 };
