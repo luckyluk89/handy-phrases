@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { convertedLanguages } from './assets/data';
 
 const AppContext = createContext();
 
@@ -8,7 +9,13 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ country, setCountry, isLoading, setIsLoading }}
+      value={{
+        country,
+        setCountry,
+        isLoading,
+        setIsLoading,
+        convertedLanguages,
+      }}
     >
       {children}
     </AppContext.Provider>

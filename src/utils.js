@@ -38,36 +38,17 @@ export const getCountryCode = async function () {
   }
 };
 
-export const getCountry = async function (countryCode) {
-  try {
-    // const countryCode = await getCountryCode();
-    const response = await fetch(
-      `https://restcountries.com/v3.1/alpha/${countryCode}`
-    );
-    const data = await response.json();
-    const country = data[0];
-    return country;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const getCountry2 = async (countryCode) => {
-  try {
-    // const countryCode = await getCountryCode();
-    const response = await fetch(
-      `https://restcountries.com/v3.1/alpha/${countryCode}`
-    );
-    const data = await response.json();
-    const country = data[0];
-    return country;
-  } catch (err) {
-    console.error(err);
-  }
+export const getCountry = async (countryCode) => {
+  const response = await axios.get(
+    `https://restcountries.com/v3.1/alpha/${countryCode}`
+  );
+  const data = response.data;
+  const country = data[0];
+  return country;
 };
 
 export const translate = async (text, targetLng) => {
-  let res = await axios.post(
+  const res = await axios.post(
     `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQOlPEccv-XnbOLIm1ZczANzqSOBWkxuk`,
     { q: text, target: targetLng }
   );

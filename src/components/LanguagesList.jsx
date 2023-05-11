@@ -1,6 +1,8 @@
 const LanguagesList = () => {
   return (
-    <h2>LanguagesList</h2>
-  )
-}
-export default LanguagesList
+    <div>
+      <h2>LanguagesList</h2>
+    </div>
+  );
+};
+export default LanguagesList;

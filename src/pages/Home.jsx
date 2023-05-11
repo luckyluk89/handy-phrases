@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { getCountry, getCountryCode } from '../utils';
+import { useEffect } from 'react';
+import { getCountry, getCountryCode, translate } from '../utils';
 
 import Loading from '../components/Loading';
 import axios from 'axios';
 import { useGlobalContext } from '../context';
+import { convertedLanguages } from '../assets/data';
 
 const Home = () => {
   const { country, setCountry, isLoading, setIsLoading } = useGlobalContext();
@@ -11,8 +12,14 @@ const Home = () => {
     (async () => {
       try {
         const code = await getCountryCode();
-        const result = await getCountry(code);
-        setCountry({ name: result.name.common });
+        const result = await getCountry('ma');
+        console.log(result);
+        setCountry({
+          name: result.name.common,
+          code: result.cca2,
+          languages: result.languages.ara,
+        });
+        // console.log(country);
         // console.log(result);
         // console.log(result.name.common);
         setIsLoading(false);
@@ -21,11 +28,22 @@ const Home = () => {
       }
     })();
   }, []);
-
   console.log(country);
-  if (isLoading) return <h3>Wczytywanie</h3>;
+  console.log(convertedLanguages);
+  // console.log(country.languages[0]);
+  console.log(convertedLanguages.get('ara'));
+  translate('Hello', 'ar');
+  // console.log(languagesMap());
 
-  if (!isLoading) return <h3>Twoja lokalizacja: {country.name}</h3>;
+  return (
+    <main>
+      <h3>
+        {isLoading ? 'Wczytywanie' : `Twoja lokalizacja: ${country.name}`}
+      </h3>
+      {/* {if (isLoading) return <h3>Wczytywanie</h3>;
+      if (!isLoading) return <h3>Twoja lokalizacja: {country.name}</h3>;} */}
+    </main>
+  );
 };
 
 export default Home;
