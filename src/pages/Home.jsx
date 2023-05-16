@@ -1,47 +1,53 @@
 import { useEffect } from 'react';
-import { getCountry, getCountryCode, translate } from '../utils';
+import {
+  getCountry,
+  getCountryCode,
+  toArray,
+  translatePhrases,
+} from '../utils';
 
-import Loading from '../components/Loading';
-import axios from 'axios';
 import { useGlobalContext } from '../context';
-import { convertedLanguages } from '../assets/data';
+import Phrases from '../components/Phrases';
+import { nanoid } from 'nanoid';
 
 const Home = () => {
   const { country, setCountry, isLoading, setIsLoading } = useGlobalContext();
+
   useEffect(() => {
     (async () => {
       try {
-        const code = await getCountryCode();
-        const result = await getCountry('ma');
+        const result = await getCountry('ca');
         console.log(result);
+        const languagesMap = new Map(Object.entries(result.languages));
+        const languagesArr = toArray(new Map(Object.entries(result.languages)));
         setCountry({
           name: result.name.common,
           code: result.cca2,
-          languages: result.languages.ara,
+          languagesMap: languagesMap,
+          languagesArr: languagesArr,
         });
-        // console.log(country);
-        // console.log(result);
-        // console.log(result.name.common);
+
         setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
     })();
   }, []);
-  console.log(country);
-  console.log(convertedLanguages);
-  // console.log(country.languages[0]);
-  console.log(convertedLanguages.get('ara'));
-  translate('Hello', 'ar');
-  // console.log(languagesMap());
 
   return (
     <main>
-      <h3>
-        {isLoading ? 'Wczytywanie' : `Twoja lokalizacja: ${country.name}`}
-      </h3>
-      {/* {if (isLoading) return <h3>Wczytywanie</h3>;
-      if (!isLoading) return <h3>Twoja lokalizacja: {country.name}</h3>;} */}
+      <section className="section">
+        <h1 className="section-title">Handy Phrases</h1>
+        <div className="cocktails-center">
+          {isLoading ? (
+            <h2>Tłumaczenie</h2>
+          ) : (
+            country.languagesArr.map((lng) => {
+              return <Phrases key={nanoid()} language={lng} />;
+            })
+          )}
+        </div>
+      </section>
     </main>
   );
 };

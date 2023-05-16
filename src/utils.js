@@ -17,7 +17,6 @@ const getCoordinates = async () => {
       latitude: res.coords.latitude,
       longitude: res.coords.longitude,
     };
-    console.log(coordinates);
     return coordinates;
   } catch (err) {
     console.log(err);
@@ -47,10 +46,34 @@ export const getCountry = async (countryCode) => {
   return country;
 };
 
-export const translate = async (text, targetLng) => {
+export const fetchTranslation = async (phrase, targetLng) => {
   const res = await axios.post(
     `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQOlPEccv-XnbOLIm1ZczANzqSOBWkxuk`,
-    { q: text, target: targetLng }
+    { q: phrase, target: targetLng }
   );
-  console.log(res);
+  return res.data.data.translations;
+};
+
+export const translatePhrases = async (phrases, targetLng) => {
+  const translatedPhrases = await phrases.map(async (phrase) => {
+    const newPhrase = await fetchTranslation(phrase, targetLng);
+    return newPhrase;
+  });
+  return translatedPhrases;
+};
+
+export const convertLanguageFormat = (languageCode, map) => {
+  const newFormat = map.get(languageCode);
+  // console.log(languageCode);
+  // console.log(map);
+  // console.log(map.get(languageCode));
+  return newFormat;
+};
+
+export const toArray = (map) => {
+  let arr = [];
+  map.forEach((value, key) => {
+    arr = [...arr, { key, value }];
+  });
+  return arr;
 };
