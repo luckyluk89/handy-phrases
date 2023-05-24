@@ -8,6 +8,7 @@ import {
 import { languagesDictionary } from '../assets/data';
 import { useEffect, useState } from 'react';
 import Phrase from './Phrase';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 const Phrases = ({ language }) => {
   const { originalPhrases, country } = useGlobalContext();
@@ -41,10 +42,19 @@ const Phrases = ({ language }) => {
 
   return (
     <article className="cocktail">
-      <h1>{language.value}</h1>
-      {phrases.map((phrase) => {
-        return <Phrase key={nanoid()} phrase={phrase[0].translatedText} />;
+      <h2>{language.value}</h2>
+      {phrases.map((phrase, index) => {
+        return (
+          <Phrase
+            key={nanoid()}
+            phrase={phrase[0].translatedText}
+            originalPhrase={originalPhrases[index]}
+          />
+        );
       })}
+      <div className="btn plus">
+        <AiOutlinePlusCircle />
+      </div>
     </article>
   );
 };

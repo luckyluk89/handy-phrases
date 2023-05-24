@@ -4,7 +4,7 @@ export const originalPhrases = [
   'Cześć',
   'Do zobaczenia',
   'Dziękuję',
-  'Proszę',
+  'You are welcome',
   'Nazywam się',
   'Jak się nazywasz?',
   'Miło Cię poznać',

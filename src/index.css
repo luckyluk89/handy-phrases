@@ -14,6 +14,7 @@ Variables
   --mainBlack: #222;
   --mainGrey: #ececec;
   --darkGrey: #afafaf;
+  --darkerGrey: #474747;
   --mainRed: #bd0303;
   --mainTransition: all 0.3s linear;
   --mainSpacing: 0.3rem;
@@ -75,7 +76,7 @@ img {
 Buttons 
 ======
 */
-.btn,
+/* .btn,
 .btn-white,
 .btn-primary {
   text-transform: uppercase;
@@ -126,7 +127,7 @@ Buttons
 .btn-details:hover {
   background: var(--primaryLightColor);
   border-color: var(--primaryLightColor);
-}
+} */
 /* 
 ====== 
 Navbar
@@ -208,10 +209,10 @@ Cocktails List
 }
 .section-title {
   font-size: 2rem;
-  text-transform: capitalize;
+  text-transform: none;
   letter-spacing: var(--mainSpacing);
   text-align: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 1rem;
   margin-top: 1rem;
 }
 .cocktails-center {
@@ -235,7 +236,7 @@ Cocktail
 */
 
 .cocktail {
-  background: var(--mainWhite);
+  background: #f2f1f1;
   margin-bottom: 2rem;
   box-shadow: var(--lightShadow);
   transition: var(--mainTransition);
@@ -245,6 +246,7 @@ Cocktail
 }
 .cocktail:hover {
   box-shadow: var(--darkShadow);
+  background-color: var(--mainWhite);
 }
 .cocktail img {
   height: 20rem;
@@ -411,8 +413,73 @@ Cocktail
   }
 }
 
+/* 
+====== 
+Customization
+======
+*/
+
 h1 {
-  font-size: 2.2rem;
+  /* font-size: 2.2rem; */
+  color: #060151;
+  text-transform: none;
+}
+
+h2 {
+  font-size: 1.5rem;
   color: #060151;
   text-transform: uppercase;
+}
+
+.logo {
+  font-size: 2.5;
+  text-transform: none;
+  color: #b70250;
+  letter-spacing: 1px;
+}
+
+.phrases-here {
+  margin-bottom: 3rem;
+}
+
+.original-phrase {
+  color: grey;
+  font-size: 0.8rem;
+  text-decoration: none;
+  margin: 0;
+  margin-left: 5px;
+}
+
+.phrase-line {
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: center; */
+}
+
+.btn {
+  /* text-transform: uppercase;
+  letter-spacing: var(--mainSpacing);*/
+  color: var(--darkGrey);
+  /*border: 2px solid var(--primaryColor);
+  padding: 0.45rem 0.8rem;
+  
+  transition: var(--mainTransition); */
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.4rem;
+  /*
+  background: transparent;
+  border-radius: var(--mainBorderRadius);
+  display: inline-block; */
+}
+.btn .plus {
+  font-size: 1.7rem;
+  color: var(--darkGrey);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn:hover {
+  /* background: var(--primaryColor); */
+  color: var(--darkerGrey);
 }

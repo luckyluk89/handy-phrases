@@ -1,54 +1,61 @@
 import { useEffect } from 'react';
-import {
-  getCountry,
-  getCountryCode,
-  toArray,
-  translatePhrases,
-} from '../utils';
+import { getAllCountries, getCountryCode } from '../utils';
 
 import { useGlobalContext } from '../context';
 import Phrases from '../components/Phrases';
 import { nanoid } from 'nanoid';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
-  const { country, setCountry, isLoading, setIsLoading } = useGlobalContext();
+  const {
+    country,
+    setCountry,
+    isLoading,
+    setIsLoading,
+    setCountriesList,
+    countriesList,
+    getCountryState,
+  } = useGlobalContext();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const result = await getCountry('ca');
-        console.log(result);
-        const languagesMap = new Map(Object.entries(result.languages));
-        const languagesArr = toArray(new Map(Object.entries(result.languages)));
-        setCountry({
-          name: result.name.common,
-          code: result.cca2,
-          languagesMap: languagesMap,
-          languagesArr: languagesArr,
-        });
-
+    try {
+      (async () => {
+        const countryCode = await getCountryCode();
+        await getCountryState(countryCode);
+        console.log(country);
+        const allCountries = await getAllCountries();
+        setCountriesList(allCountries);
+        // console.log(countriesList[0]);
         setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+      })();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
-    <main>
-      <section className="section">
-        <h1 className="section-title">Handy Phrases</h1>
-        <div className="cocktails-center">
-          {isLoading ? (
-            <h2>Tłumaczenie</h2>
-          ) : (
-            country.languagesArr.map((lng) => {
-              return <Phrases key={nanoid()} language={lng} />;
-            })
-          )}
-        </div>
-      </section>
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <section className="section">
+          <h1 className="section-title">You are in {country.name}</h1>
+
+          <h1 className="section-title phrases-here">
+            Here you will find your Handy Phrases!
+          </h1>
+
+          <div className="cocktails-center">
+            {isLoading ? (
+              <h2>Tłumaczenie</h2>
+            ) : (
+              country.languagesArr.map((lng) => {
+                return <Phrases key={nanoid()} language={lng} />;
+              })
+            )}
+          </div>
+        </section>
+      </main>
+    </>
   );
 };
 

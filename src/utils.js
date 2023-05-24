@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useGlobalContext } from './context';
 
 const getLocationPromise = () => {
   return new Promise(function (resolve, reject) {
@@ -30,7 +31,8 @@ export const getCountryCode = async function () {
       `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
     );
     const data = await response.json();
-    const countryCode = data.countryCode;
+    const countryCode = data.countryCode.toUpperCase();
+    console.log(countryCode);
     return countryCode;
   } catch (err) {
     console.error(err);
@@ -38,12 +40,29 @@ export const getCountryCode = async function () {
 };
 
 export const getCountry = async (countryCode) => {
-  const response = await axios.get(
-    `https://restcountries.com/v3.1/alpha/${countryCode}`
-  );
-  const data = response.data;
-  const country = data[0];
-  return country;
+  try {
+    const response = await axios.get(
+      `https://restcountries.com/v3.1/alpha/${countryCode}`
+    );
+    const data = response.data;
+    const country = data[0];
+    console.log(data);
+    return country;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAllCountries = async () => {
+  try {
+    const response = await axios.get(`https://restcountries.com/v3.1/all`);
+    const countries = response.data;
+    console.log(countries);
+    console.log(typeof countries);
+    return countries;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const fetchTranslation = async (phrase, targetLng) => {
@@ -76,4 +95,11 @@ export const toArray = (map) => {
     arr = [...arr, { key, value }];
   });
   return arr;
+};
+
+export const getCountryByName = (countryName, countriesList) => {
+  const country = countriesList.find(
+    (country) => country.name.common === countryName
+  );
+  return country;
 };
